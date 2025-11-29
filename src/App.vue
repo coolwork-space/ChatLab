@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/common/Sidebar.vue'
 
 const chatStore = useChatStore()
 const { isInitialized } = storeToRefs(chatStore)

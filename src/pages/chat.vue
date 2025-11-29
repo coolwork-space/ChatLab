@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useChatStore } from '@/stores/chat'
 import { storeToRefs } from 'pinia'
 import type { AnalysisSession, MemberActivity, HourlyActivity, DailyActivity, MessageType } from '@/types/chat'
+import { formatDateRange } from '@/utils'
 import UITabs from '@/components/UI/Tabs.vue'
 import OverviewTab from '@/components/analysis/OverviewTab.vue'
 import MembersTab from '@/components/analysis/MembersTab.vue'
@@ -77,6 +78,15 @@ const filteredMessageCount = computed(() => {
 // 当前筛选后的活跃成员数
 const filteredMemberCount = computed(() => {
   return memberActivity.value.filter((m) => m.messageCount > 0).length
+})
+
+// 格式化时间范围显示
+const dateRangeText = computed(() => {
+  if (selectedYear.value) {
+    return `${selectedYear.value}年`
+  }
+  if (!timeRange.value) return ''
+  return formatDateRange(timeRange.value.start, timeRange.value.end)
 })
 
 // Sync route param to store
@@ -210,10 +220,8 @@ onMounted(() => {
                 {{ session.name }}
               </h1>
               <p class="text-xs text-gray-500 dark:text-gray-400">
-                <template v-if="selectedYear">
-                  {{ selectedYear }}年: {{ filteredMessageCount }} 条消息 · {{ filteredMemberCount }} 位活跃成员
-                </template>
-                <template v-else>{{ session.messageCount }} 条消息 · {{ session.memberCount }} 位成员</template>
+                {{ dateRangeText }}，{{ selectedYear ? filteredMemberCount : session.memberCount }} 位成员共聊了
+                {{ selectedYear ? filteredMessageCount : session.messageCount }} 条消息
               </p>
             </div>
           </div>

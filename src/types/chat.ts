@@ -20,6 +20,28 @@ export enum MessageType {
 }
 
 /**
+ * 消息类型名称映射
+ */
+export const MESSAGE_TYPE_NAMES: Record<number, string> = {
+  [MessageType.TEXT]: '文字',
+  [MessageType.IMAGE]: '图片',
+  [MessageType.VOICE]: '语音',
+  [MessageType.VIDEO]: '视频',
+  [MessageType.FILE]: '文件',
+  [MessageType.EMOJI]: '表情',
+  [MessageType.SYSTEM]: '系统',
+  [MessageType.OTHER]: '其他',
+}
+
+/**
+ * 获取消息类型名称
+ * @param type 消息类型
+ */
+export function getMessageTypeName(type: MessageType | number): string {
+  return MESSAGE_TYPE_NAMES[type] || '未知'
+}
+
+/**
  * 聊天平台枚举
  */
 export enum ChatPlatform {
@@ -146,14 +168,7 @@ export interface WeekdayActivity {
 /**
  * 夜猫称号等级
  */
-export type NightOwlTitle =
-  | '养生达人'
-  | '偶尔失眠'
-  | '夜猫子'
-  | '秃头预备役'
-  | '修仙练习生'
-  | '守夜冠军'
-  | '不睡觉の神'
+export type NightOwlTitle = '养生达人' | '偶尔失眠' | '夜猫子' | '秃头预备役' | '修仙练习生' | '守夜冠军' | '不睡觉の神'
 
 /**
  * 修仙排行榜项

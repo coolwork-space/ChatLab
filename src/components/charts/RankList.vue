@@ -62,7 +62,7 @@ function getBarColor(index: number): string {
     <div
       v-for="(member, index) in displayMembers"
       :key="member.id"
-      class="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800/50"
+      class="flex items-center gap-3 px-5 py-3 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800/50"
     >
       <!-- 排名 -->
       <div

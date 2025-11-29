@@ -37,7 +37,7 @@ const showViewAll = computed(() => {
 
 <template>
   <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
-    <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-gray-800">
+    <div class="flex items-center justify-between border-b border-gray-200 px-5 py-3 dark:border-gray-800">
       <div>
         <h3 class="font-semibold text-gray-900 dark:text-white">{{ title }}</h3>
         <p v-if="description" class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ description }}</p>

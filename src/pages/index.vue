@@ -197,7 +197,9 @@ function getProgressText(): string {
               <p class="text-lg font-semibold text-gray-900 dark:text-white">
                 {{ isDragOver ? '松开鼠标导入文件' : '点击选择或拖拽文件到这里' }}
               </p>
-              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">支持 QQ、微信聊天记录（JSON/TXT 格式）</p>
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                支持 QQ、微信、Discord、Snapchat、Reddit、TikTok 等聊天记录（JSON/TXT 格式）
+              </p>
             </template>
           </div>
         </div>
