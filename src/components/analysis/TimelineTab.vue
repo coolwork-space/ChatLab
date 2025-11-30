@@ -27,12 +27,43 @@ const isMultiYear = computed(() => {
   return years.size > 1
 })
 
-// 每日趋势图数据
+// 每日趋势图数据（动态聚合）
 const dailyChartData = computed<LineChartData>(() => {
-  const dateFormat = isMultiYear.value ? 'YYYY/MM/DD' : 'MM/DD'
+  const rawData = props.dailyActivity
+  const maxPoints = 50 // 最大展示点数
+
+  if (rawData.length <= maxPoints) {
+    const dateFormat = isMultiYear.value ? 'YYYY/MM/DD' : 'MM/DD'
+    return {
+      labels: rawData.map((d) => dayjs(d.date).format(dateFormat)),
+      values: rawData.map((d) => d.messageCount),
+    }
+  }
+
+  // 需要聚合
+  const groupSize = Math.ceil(rawData.length / maxPoints)
+  const aggregatedLabels: string[] = []
+  const aggregatedValues: number[] = []
+
+  for (let i = 0; i < rawData.length; i += groupSize) {
+    const chunk = rawData.slice(i, i + groupSize)
+    if (chunk.length === 0) continue
+
+    // 计算该组的平均日期作为标签
+    const midIndex = Math.floor(chunk.length / 2)
+    const midDate = chunk[midIndex].date
+    const dateFormat = isMultiYear.value ? 'YYYY/MM/DD' : 'MM/DD'
+    aggregatedLabels.push(dayjs(midDate).format(dateFormat))
+
+    // 计算该组的日均消息数
+    const totalMessages = chunk.reduce((sum, d) => sum + d.messageCount, 0)
+    const avgMessages = Math.round(totalMessages / chunk.length)
+    aggregatedValues.push(avgMessages)
+  }
+
   return {
-    labels: props.dailyActivity.map((d) => dayjs(d.date).format(dateFormat)),
-    values: props.dailyActivity.map((d) => d.messageCount),
+    labels: aggregatedLabels,
+    values: aggregatedValues,
   }
 })
 

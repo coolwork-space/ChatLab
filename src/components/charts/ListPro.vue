@@ -65,6 +65,9 @@ const formattedCount = computed(() => props.countTemplate.replace('{count}', Str
       </div>
     </div>
 
+    <!-- 配置区（可选） -->
+    <slot name="config" />
+
     <!-- 默认显示 Top N -->
     <div class="divide-y divide-gray-100 dark:divide-gray-800">
       <div v-for="(item, index) in topNData" :key="index" class="px-5 py-3">

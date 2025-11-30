@@ -21,11 +21,11 @@ const isLoading = ref(false)
 const titleColors: Record<string, string> = {
   养生达人: 'text-green-600 dark:text-green-400',
   偶尔失眠: 'text-blue-600 dark:text-blue-400',
-  夜猫子: 'text-yellow-600 dark:text-yellow-400',
-  秃头预备役: 'text-orange-600 dark:text-orange-400',
-  修仙练习生: 'text-pink-600 dark:text-pink-400',
-  守夜冠军: 'text-purple-600 dark:text-purple-400',
-  不睡觉の神: 'text-red-600 dark:text-red-400',
+  经常失眠: 'text-yellow-600 dark:text-yellow-400',
+  夜猫子: 'text-orange-600 dark:text-orange-400',
+  秃头预备役: 'text-pink-600 dark:text-pink-400',
+  修仙练习生: 'text-purple-600 dark:text-purple-400',
+  守夜冠军: 'text-red-600 dark:text-red-400',
 }
 
 async function loadData() {

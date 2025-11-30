@@ -27,9 +27,9 @@ const anchors = [
   { id: 'member-activity', label: '📊 水群榜' },
   { id: 'dragon-king', label: '🐉 龙王榜' },
   { id: 'monologue', label: '🎤 自言自语榜' },
-  { id: 'diving', label: '🤿 潜水榜' },
   { id: 'repeat', label: '🔁 复读榜' },
   { id: 'night-owl', label: '🦉 修仙榜' },
+  { id: 'diving', label: '🤿 潜水榜' },
 ]
 
 // 使用锚点导航 composable
@@ -65,11 +65,6 @@ const memberRankData = computed<RankItem[]>(() => {
         <MonologueRank :session-id="sessionId" :time-filter="timeFilter" />
       </div>
 
-      <!-- 潜水排名 -->
-      <div id="diving" class="scroll-mt-24">
-        <DivingRank :session-id="sessionId" :time-filter="timeFilter" />
-      </div>
-
       <!-- 复读分析 -->
       <div id="repeat" class="scroll-mt-24">
         <RepeatSection :session-id="sessionId" :time-filter="timeFilter" />
@@ -78,6 +73,11 @@ const memberRankData = computed<RankItem[]>(() => {
       <!-- 修仙排行榜 -->
       <div id="night-owl" class="scroll-mt-24">
         <NightOwlRank :session-id="sessionId" :time-filter="timeFilter" />
+      </div>
+
+      <!-- 潜水排名 -->
+      <div id="diving" class="scroll-mt-24">
+        <DivingRank :session-id="sessionId" :time-filter="timeFilter" />
       </div>
     </div>
 

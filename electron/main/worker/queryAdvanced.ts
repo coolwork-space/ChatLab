@@ -337,11 +337,11 @@ export function getCatchphraseAnalysis(sessionId: string, filter?: TimeFilter): 
 function getNightOwlTitleByCount(count: number): string {
   if (count === 0) return '养生达人'
   if (count <= 20) return '偶尔失眠'
-  if (count <= 50) return '夜猫子'
-  if (count <= 100) return '秃头预备役'
-  if (count <= 200) return '修仙练习生'
-  if (count <= 500) return '守夜冠军'
-  return '不睡觉の神'
+  if (count <= 50) return '经常失眠'
+  if (count <= 100) return '夜猫子'
+  if (count <= 200) return '秃头预备役'
+  if (count <= 500) return '修仙练习生'
+  return '守夜冠军'
 }
 
 /**

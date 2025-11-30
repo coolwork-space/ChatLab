@@ -17,6 +17,7 @@
     "build": "electron-vite build",
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:win": "electron-vite build && electron-builder --win",
+    "type-check": "vue-tsc --noEmit",
     "postinstall": "electron-rebuild"
   },
   "dependencies": {

@@ -9,7 +9,7 @@ import type {
   MonthlyActivity,
 } from '@/types/chat'
 import { getMessageTypeName } from '@/types/chat'
-import { DoughnutChart, ProgressBar, BarChart } from '@/components/charts'
+import { DoughnutChart, BarChart } from '@/components/charts'
 import type { DoughnutChartData, BarChartData } from '@/components/charts'
 import { SectionCard, StatCard } from '@/components/UI'
 
@@ -222,12 +222,6 @@ const weekdayVsWeekend = computed(() => {
     weekend: total > 0 ? Math.round((weekendSum / total) * 100) : 0,
   }
 })
-
-// 获取排名徽章
-function getRankBadge(index: number): string {
-  const badges = ['🥇', '🥈', '🥉']
-  return badges[index] || `${index + 1}`
-}
 </script>
 
 <template>

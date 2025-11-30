@@ -222,10 +222,8 @@ const mainIpcMain = (win: BrowserWindow) => {
    * 获取所有分析会话列表
    */
   ipcMain.handle('chat:getSessions', async () => {
-    console.log('[IpcMain] chat:getSessions called')
     try {
       const sessions = await worker.getAllSessions()
-      console.log('[IpcMain] Found sessions:', sessions.length)
       return sessions
     } catch (error) {
       console.error('[IpcMain] Error getting sessions:', error)

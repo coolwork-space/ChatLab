@@ -176,7 +176,7 @@ export interface MonthlyActivity {
 /**
  * 夜猫称号等级
  */
-export type NightOwlTitle = '养生达人' | '偶尔失眠' | '夜猫子' | '秃头预备役' | '修仙练习生' | '守夜冠军' | '不睡觉の神'
+export type NightOwlTitle = '养生达人' | '偶尔失眠' | '经常失眠' | '夜猫子' | '秃头预备役' | '修仙练习生' | '守夜冠军'
 
 /**
  * 修仙排行榜项

@@ -678,11 +678,11 @@ export function getCatchphraseAnalysis(sessionId: string, filter?: TimeFilter): 
 function getNightOwlTitleByCount(count: number): NightOwlTitle {
   if (count === 0) return '养生达人'
   if (count <= 20) return '偶尔失眠'
-  if (count <= 50) return '夜猫子'
-  if (count <= 100) return '秃头预备役'
-  if (count <= 200) return '修仙练习生'
-  if (count <= 500) return '守夜冠军'
-  return '不睡觉の神'
+  if (count <= 50) return '经常失眠'
+  if (count <= 100) return '夜猫子'
+  if (count <= 200) return '秃头预备役'
+  if (count <= 500) return '修仙练习生'
+  return '守夜冠军'
 }
 
 /**
@@ -777,10 +777,7 @@ export function getNightOwlAnalysis(sessionId: string, filter?: TimeFilter): Nig
 
     // ========== 分析 2 & 3: 最晚/最早发言 ==========
     // 按调整后的日期分组消息
-    const dailyMessages = new Map<
-      string,
-      Array<{ senderId: number; ts: number; hour: number; minute: number }>
-    >()
+    const dailyMessages = new Map<string, Array<{ senderId: number; ts: number; hour: number; minute: number }>>()
 
     // ========== 分析 4: 连续修仙天数 ==========
     const memberNightDays = new Map<number, Set<string>>() // 成员 -> 有深夜发言的日期集合
@@ -966,7 +963,10 @@ export function getNightOwlAnalysis(sessionId: string, filter?: TimeFilter): Nig
 
     // ========== 构建修仙王者（综合排名） ==========
     // 综合得分 = 深夜发言数 × 1 + 最晚下班次数 × 10 + 连续修仙天数 × 20
-    const championScores = new Map<number, { nightMessages: number; lastSpeakerCount: number; consecutiveDays: number }>()
+    const championScores = new Map<
+      number,
+      { nightMessages: number; lastSpeakerCount: number; consecutiveDays: number }
+    >()
 
     for (const item of nightOwlRank) {
       if (!championScores.has(item.memberId)) {
