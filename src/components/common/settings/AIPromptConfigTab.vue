@@ -95,10 +95,10 @@ function isActivePreset(presetId: string, chatType: 'group' | 'private'): boolea
           <div class="flex-1 pr-4">
             <p class="text-sm font-medium text-gray-900 dark:text-white">发送条数限制</p>
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              每次发送给 AI 的最大消息条数，用于控制上下文长度（100-5000）
+              每次发送给 AI 的最大消息条数，用于控制上下文长度（建议在500以上）
             </p>
           </div>
-          <UInput v-model.number="globalMaxMessages" type="number" min="100" max="5000" class="w-24" />
+          <UInput v-model.number="globalMaxMessages" type="number" min="1" max="5000" class="w-24" />
         </div>
       </div>
     </div>
@@ -125,7 +125,7 @@ function isActivePreset(presetId: string, chatType: 'group' | 'private'): boolea
           class="group flex cursor-pointer items-center justify-between rounded-lg border p-3 transition-colors"
           :class="[
             isActivePreset(preset.id, 'group')
-              ? 'border-violet-300 bg-violet-50 dark:border-violet-700 dark:bg-violet-900/20'
+              ? 'border-primary-300 bg-primary-50 dark:border-primary-700 dark:bg-primary-900/20'
               : 'border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800',
           ]"
           @click="setActivePreset(preset.id, 'group')"
@@ -136,7 +136,7 @@ function isActivePreset(presetId: string, chatType: 'group' | 'private'): boolea
               class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
               :class="[
                 isActivePreset(preset.id, 'group')
-                  ? 'bg-violet-500 text-white'
+                  ? 'bg-primary-500 text-white'
                   : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
               ]"
             >
@@ -187,7 +187,7 @@ function isActivePreset(presetId: string, chatType: 'group' | 'private'): boolea
           class="group flex cursor-pointer items-center justify-between rounded-lg border p-3 transition-colors"
           :class="[
             isActivePreset(preset.id, 'private')
-              ? 'border-blue-300 bg-blue-50 dark:border-blue-700 dark:bg-blue-900/20'
+              ? 'border-primary-300 bg-primary-50 dark:border-primary-700 dark:bg-primary-900/20'
               : 'border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800',
           ]"
           @click="setActivePreset(preset.id, 'private')"
@@ -198,7 +198,7 @@ function isActivePreset(presetId: string, chatType: 'group' | 'private'): boolea
               class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
               :class="[
                 isActivePreset(preset.id, 'private')
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-primary-500 text-white'
                   : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
               ]"
             >

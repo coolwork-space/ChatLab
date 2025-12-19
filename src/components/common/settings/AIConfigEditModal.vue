@@ -412,7 +412,7 @@ watch(
                 >
                   本地服务
                 </p>
-                <p class="mt-0.5 text-[10px] text-gray-500">Ollama、Parallax 等</p>
+                <p class="mt-0.5 text-[10px] text-gray-500">Ollama 等</p>
               </div>
             </button>
 

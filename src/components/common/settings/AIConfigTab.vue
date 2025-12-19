@@ -135,12 +135,9 @@ onMounted(() => {
 
   <!-- 配置列表视图 -->
   <div v-else class="space-y-4">
-    <UAlert v-if="configs.length === 0" color="warning" variant="outline" icon="i-lucide-terminal" class="p-2">
+    <UAlert v-if="configs.length === 0" color="error" variant="outline" icon="i-lucide-terminal" class="p-2">
       <template #title>
-        <p>
-          强烈建议配置本地模型，分析聊天记录更加安全，个人实测8B小模型也能满足分析需求，而且可以无限量分析，本地模型部署参考
-          <a href="https://github.com/GradientHQ/parallax" class="text-pink-500" target="_blank">GradientHQ/parallax</a>
-        </p>
+        <p>建议优先配置本地模型，分析聊天记录更加安全，个人实测qwen3-8B小模型也能满足分析需求</p>
       </template>
     </UAlert>
     <!-- 配置列表 -->
