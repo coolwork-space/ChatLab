@@ -128,122 +128,134 @@ function isActivePreset(presetId: string, chatType: 'group' | 'private'): boolea
     <!-- 分隔线 -->
     <div class="border-t border-gray-200 dark:border-gray-700"></div>
 
-    <!-- 群聊预设组 -->
-    <div>
-      <div class="mb-3 flex items-center justify-between">
-        <h4 class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
-          <UIcon name="i-heroicons-chat-bubble-left-right" class="h-4 w-4 text-violet-500" />
-          群聊系统提示词
-        </h4>
-        <UButton variant="ghost" color="gray" @click="openAddModal('group')">
-          <UIcon name="i-heroicons-plus" class="mr-1 h-3.5 w-3.5" />
-          添加
-        </UButton>
-      </div>
-      <div class="space-y-2">
-        <div
-          v-for="preset in groupPresets"
-          :key="preset.id"
-          class="group flex cursor-pointer items-center justify-between rounded-lg border p-3 transition-colors"
-          :class="[
-            isActivePreset(preset.id, 'group')
-              ? 'border-primary-300 bg-primary-50 dark:border-primary-700 dark:bg-primary-900/20'
-              : 'border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800',
-          ]"
-          @click="setActivePreset(preset.id, 'group')"
-        >
-          <!-- 预设信息 -->
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
-              :class="[
-                isActivePreset(preset.id, 'group')
-                  ? 'bg-primary-500 text-white'
-                  : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
-              ]"
-            >
-              <UIcon
-                :name="isActivePreset(preset.id, 'group') ? 'i-heroicons-check' : 'i-heroicons-document-text'"
-                class="h-3.5 w-3.5"
-              />
-            </div>
+    <!-- 群聊和私聊系统提示词并排 -->
+    <div class="grid grid-cols-2 gap-4">
+      <!-- 群聊预设组 -->
+      <div>
+        <div class="mb-3 flex items-center justify-between">
+          <h4 class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
+            <UIcon name="i-heroicons-chat-bubble-left-right" class="h-4 w-4 text-violet-500" />
+            群聊系统提示词
+          </h4>
+          <UButton variant="ghost" color="gray" size="xs" @click="openAddModal('group')">
+            <UIcon name="i-heroicons-plus" class="mr-1 h-3.5 w-3.5" />
+            添加
+          </UButton>
+        </div>
+        <div class="space-y-2">
+          <div
+            v-for="preset in groupPresets"
+            :key="preset.id"
+            class="group flex cursor-pointer items-center justify-between rounded-lg border p-2.5 transition-colors"
+            :class="[
+              isActivePreset(preset.id, 'group')
+                ? 'border-primary-300 bg-primary-50 dark:border-primary-700 dark:bg-primary-900/20'
+                : 'border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800',
+            ]"
+            @click="setActivePreset(preset.id, 'group')"
+          >
+            <!-- 预设信息 -->
             <div class="flex items-center gap-2">
-              <span class="text-sm font-medium text-gray-900 dark:text-white">{{ preset.name }}</span>
-              <UBadge v-if="preset.isBuiltIn" color="gray" variant="soft">内置</UBadge>
+              <div
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+                :class="[
+                  isActivePreset(preset.id, 'group')
+                    ? 'bg-primary-500 text-white'
+                    : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
+                ]"
+              >
+                <UIcon
+                  :name="isActivePreset(preset.id, 'group') ? 'i-heroicons-check' : 'i-heroicons-document-text'"
+                  class="h-3 w-3"
+                />
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-medium text-gray-900 dark:text-white">{{ preset.name }}</span>
+                <UBadge v-if="preset.isBuiltIn" color="gray" variant="soft" size="xs">内置</UBadge>
+              </div>
             </div>
-          </div>
 
-          <!-- 操作按钮 -->
-          <div class="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100" @click.stop>
-            <UButton color="gray" variant="ghost" @click="openEditModal(preset)">
-              {{ preset.isBuiltIn ? '查看' : '编辑' }}
-            </UButton>
-            <UButton color="gray" variant="ghost" @click="duplicatePreset(preset.id)">复制</UButton>
-            <UButton v-if="!preset.isBuiltIn" color="error" variant="ghost" @click="deletePreset(preset.id)">
-              删除
-            </UButton>
+            <!-- 操作按钮 -->
+            <div class="flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100" @click.stop>
+              <UButton color="gray" variant="ghost" size="xs" @click="openEditModal(preset)">
+                {{ preset.isBuiltIn ? '查看' : '编辑' }}
+              </UButton>
+              <UButton color="gray" variant="ghost" size="xs" @click="duplicatePreset(preset.id)">复制</UButton>
+              <UButton
+                v-if="!preset.isBuiltIn"
+                color="error"
+                variant="ghost"
+                size="xs"
+                @click="deletePreset(preset.id)"
+              >
+                删除
+              </UButton>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- 分隔线 -->
-    <div class="border-t border-gray-200 dark:border-gray-700"></div>
-
-    <!-- 私聊系统提示词 -->
-    <div>
-      <div class="mb-3 flex items-center justify-between">
-        <h4 class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
-          <UIcon name="i-heroicons-user" class="h-4 w-4 text-blue-500" />
-          私聊系统提示词
-        </h4>
-        <UButton variant="ghost" color="gray" @click="openAddModal('private')">
-          <UIcon name="i-heroicons-plus" class="mr-1 h-3.5 w-3.5" />
-          添加
-        </UButton>
-      </div>
-      <div class="space-y-2">
-        <div
-          v-for="preset in privatePresets"
-          :key="preset.id"
-          class="group flex cursor-pointer items-center justify-between rounded-lg border p-3 transition-colors"
-          :class="[
-            isActivePreset(preset.id, 'private')
-              ? 'border-primary-300 bg-primary-50 dark:border-primary-700 dark:bg-primary-900/20'
-              : 'border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800',
-          ]"
-          @click="setActivePreset(preset.id, 'private')"
-        >
-          <!-- 预设信息 -->
-          <div class="flex items-center gap-3">
-            <div
-              class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
-              :class="[
-                isActivePreset(preset.id, 'private')
-                  ? 'bg-primary-500 text-white'
-                  : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
-              ]"
-            >
-              <UIcon
-                :name="isActivePreset(preset.id, 'private') ? 'i-heroicons-check' : 'i-heroicons-document-text'"
-                class="h-3.5 w-3.5"
-              />
-            </div>
+      <!-- 私聊系统提示词 -->
+      <div>
+        <div class="mb-3 flex items-center justify-between">
+          <h4 class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
+            <UIcon name="i-heroicons-user" class="h-4 w-4 text-blue-500" />
+            私聊系统提示词
+          </h4>
+          <UButton variant="ghost" color="gray" size="xs" @click="openAddModal('private')">
+            <UIcon name="i-heroicons-plus" class="mr-1 h-3.5 w-3.5" />
+            添加
+          </UButton>
+        </div>
+        <div class="space-y-2">
+          <div
+            v-for="preset in privatePresets"
+            :key="preset.id"
+            class="group flex cursor-pointer items-center justify-between rounded-lg border p-2.5 transition-colors"
+            :class="[
+              isActivePreset(preset.id, 'private')
+                ? 'border-primary-300 bg-primary-50 dark:border-primary-700 dark:bg-primary-900/20'
+                : 'border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800',
+            ]"
+            @click="setActivePreset(preset.id, 'private')"
+          >
+            <!-- 预设信息 -->
             <div class="flex items-center gap-2">
-              <span class="text-sm font-medium text-gray-900 dark:text-white">{{ preset.name }}</span>
-              <UBadge v-if="preset.isBuiltIn" color="gray" variant="soft">内置</UBadge>
+              <div
+                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+                :class="[
+                  isActivePreset(preset.id, 'private')
+                    ? 'bg-primary-500 text-white'
+                    : 'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400',
+                ]"
+              >
+                <UIcon
+                  :name="isActivePreset(preset.id, 'private') ? 'i-heroicons-check' : 'i-heroicons-document-text'"
+                  class="h-3 w-3"
+                />
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-medium text-gray-900 dark:text-white">{{ preset.name }}</span>
+                <UBadge v-if="preset.isBuiltIn" color="gray" variant="soft" size="xs">内置</UBadge>
+              </div>
             </div>
-          </div>
 
-          <!-- 操作按钮 -->
-          <div class="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100" @click.stop>
-            <UButton color="gray" variant="ghost" @click="openEditModal(preset)">
-              {{ preset.isBuiltIn ? '查看' : '编辑' }}
-            </UButton>
-            <UButton color="gray" variant="ghost" @click="duplicatePreset(preset.id)">复制</UButton>
-            <UButton v-if="!preset.isBuiltIn" color="error" variant="ghost" @click="deletePreset(preset.id)">
-              删除
-            </UButton>
+            <!-- 操作按钮 -->
+            <div class="flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100" @click.stop>
+              <UButton color="gray" variant="ghost" size="xs" @click="openEditModal(preset)">
+                {{ preset.isBuiltIn ? '查看' : '编辑' }}
+              </UButton>
+              <UButton color="gray" variant="ghost" size="xs" @click="duplicatePreset(preset.id)">复制</UButton>
+              <UButton
+                v-if="!preset.isBuiltIn"
+                color="error"
+                variant="ghost"
+                size="xs"
+                @click="deletePreset(preset.id)"
+              >
+                删除
+              </UButton>
+            </div>
           </div>
         </div>
       </div>

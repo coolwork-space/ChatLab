@@ -19,7 +19,7 @@ defineProps<{
           </span>
         </div>
         <p class="mt-2 text-lg text-white/90 font-medium">
-          私聊 ·
+          {{ session.type === 'private' ? '私聊' : '群聊' }} ·
           <span class="opacity-80">数据分析报告</span>
         </p>
       </div>
