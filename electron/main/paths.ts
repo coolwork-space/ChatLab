@@ -225,41 +225,48 @@ function writeMigrationLog(message: string): void {
 
 /**
  * 执行从 Documents/ChatLab 到新目录的数据迁移
- * 采用合并策略：只复制不存在的文件，不覆盖已存在的文件
+ * 迁移整个目录的所有内容，采用合并策略：只复制不存在的文件，不覆盖已存在的文件
  * 只有在所有数据都成功迁移后才删除旧目录
  */
 export function migrateFromLegacyDir(): { success: boolean; migratedDirs: string[]; error?: string } {
   const legacyDir = getLegacyDataDir()
   const newDir = getAppDataDir()
 
-  const dirsToMigrate = ['databases', 'ai', 'settings', 'logs']
-
   try {
     if (!fs.existsSync(legacyDir)) {
-      console.log('[Paths] No legacy directory found, skipping migration')
       return { success: true, migratedDirs: [] }
     }
 
-    console.log(`[Paths] Migrating from ${legacyDir} to ${newDir}`)
+    // 获取旧目录下的所有子目录和文件
+    const entries = fs.readdirSync(legacyDir, { withFileTypes: true })
+    const dirsToMigrate = entries.filter((e) => e.isDirectory() && !e.name.startsWith('.')).map((e) => e.name)
+    const filesToMigrate = entries.filter((e) => e.isFile() && !e.name.startsWith('.')).map((e) => e.name)
+
     const result = migrateDirectory(legacyDir, newDir, dirsToMigrate)
+
+    // 迁移根目录下的文件
+    ensureDir(newDir)
+    for (const file of filesToMigrate) {
+      const srcPath = path.join(legacyDir, file)
+      const destPath = path.join(newDir, file)
+      if (!fs.existsSync(destPath)) {
+        fs.copyFileSync(srcPath, destPath)
+      }
+    }
 
     // 构建迁移摘要
     const summary: string[] = []
     summary.push(`Migration from ${legacyDir} to ${newDir}`)
 
     // 迁移成功，删除旧目录
-    console.log(`[Paths] Migration successful, removing legacy directory: ${legacyDir}`)
     fs.rmSync(legacyDir, { recursive: true, force: true })
-    console.log('[Paths] Legacy directory removed')
     summary.push('Status: Success, legacy directory removed')
 
     if (result.migratedDirs.length > 0) {
-      console.log(`[Paths] Migrated: ${result.migratedDirs.join(', ')}`)
-      summary.push(`Migrated: ${result.migratedDirs.join(', ')}`)
+      summary.push(`Migrated dirs: ${result.migratedDirs.join(', ')}`)
     }
-    if (result.skippedDirs.length > 0) {
-      console.log(`[Paths] Skipped (already exist): ${result.skippedDirs.join(', ')}`)
-      summary.push(`Skipped: ${result.skippedDirs.join(', ')}`)
+    if (filesToMigrate.length > 0) {
+      summary.push(`Migrated files: ${filesToMigrate.length}`)
     }
 
     // 写入迁移日志
