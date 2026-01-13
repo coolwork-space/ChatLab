@@ -60,7 +60,7 @@ import {
   filterMessagesWithContext,
   getMultipleSessionsMessages,
 } from './query'
-import { streamImport, streamParseFileInfo } from './import'
+import { streamImport, streamParseFileInfo, analyzeIncrementalImport, incrementalImport } from './import'
 
 // 初始化数据库目录
 initDbDir(workerData.dbDir)
@@ -150,6 +150,9 @@ const asyncHandlers: Record<string, (payload: any, requestId: string) => Promise
   streamImport: (p, id) => streamImport(p.filePath, id),
   // 流式解析文件信息（用于合并预览）
   streamParseFileInfo: (p, id) => streamParseFileInfo(p.filePath, id),
+  // 增量导入
+  analyzeIncrementalImport: (p, id) => analyzeIncrementalImport(p.sessionId, p.filePath, id),
+  incrementalImport: (p, id) => incrementalImport(p.sessionId, p.filePath, id),
 }
 
 // 处理消息

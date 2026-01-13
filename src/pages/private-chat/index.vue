@@ -14,6 +14,7 @@ import QuotesTab from './components/QuotesTab.vue'
 import MemberTab from './components/MemberTab.vue'
 import PageHeader from '@/components/layout/PageHeader.vue'
 import SessionIndexModal from '@/components/analysis/SessionIndexModal.vue'
+import IncrementalImportModal from '@/components/analysis/IncrementalImportModal.vue'
 import LoadingState from '@/components/UI/LoadingState.vue'
 import { useSessionStore } from '@/stores/session'
 import { useLayoutStore } from '@/stores/layout'
@@ -28,6 +29,9 @@ const { currentSessionId } = storeToRefs(sessionStore)
 
 // 会话索引弹窗状态
 const showSessionIndexModal = ref(false)
+
+// 增量导入弹窗状态
+const showIncrementalImportModal = ref(false)
 
 // 打开聊天记录查看器
 function openChatRecordViewer() {
@@ -267,6 +271,15 @@ onMounted(() => {
         icon-class="bg-pink-600 text-white dark:bg-pink-500 dark:text-white"
       >
         <template #actions>
+          <UTooltip :text="t('analysis.tooltip.incrementalImport')">
+            <UButton
+              icon="i-heroicons-plus-circle"
+              color="neutral"
+              variant="ghost"
+              size="sm"
+              @click="showIncrementalImportModal = true"
+            />
+          </UTooltip>
           <UTooltip :text="t('analysis.tooltip.chatViewer')">
             <UButton
               icon="i-heroicons-chat-bubble-bottom-center-text"
@@ -363,6 +376,15 @@ onMounted(() => {
 
     <!-- 会话索引弹窗（内部自动检测并弹出） -->
     <SessionIndexModal v-if="currentSessionId" v-model="showSessionIndexModal" :session-id="currentSessionId" />
+
+    <!-- 增量导入弹窗 -->
+    <IncrementalImportModal
+      v-if="currentSessionId && session"
+      v-model="showIncrementalImportModal"
+      :session-id="currentSessionId"
+      :session-name="session.name"
+      @imported="loadAnalysisData"
+    />
   </div>
 </template>
 

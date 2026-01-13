@@ -699,4 +699,68 @@ export function registerChatHandlers(ctx: IpcContext): void {
       return []
     }
   })
+
+  // ==================== 增量导入 ====================
+
+  /**
+   * 分析增量导入（检测去重后能新增多少消息）
+   */
+  ipcMain.handle('chat:analyzeIncrementalImport', async (_, sessionId: string, filePath: string) => {
+    try {
+      // 检测文件格式
+      const formatFeature = detectFormat(filePath)
+      if (!formatFeature) {
+        const diagnosis = diagnoseFormat(filePath)
+        return {
+          error: 'error.unrecognized_format',
+          diagnosis: {
+            suggestion: diagnosis.suggestion,
+          },
+        }
+      }
+
+      // 使用 Worker 分析
+      const result = await worker.analyzeIncrementalImport(sessionId, filePath)
+      return result
+    } catch (error) {
+      console.error('[IpcMain] 分析增量导入失败:', error)
+      return { error: String(error) }
+    }
+  })
+
+  /**
+   * 执行增量导入
+   */
+  ipcMain.handle('chat:incrementalImport', async (_, sessionId: string, filePath: string) => {
+    try {
+      // 发送进度
+      win.webContents.send('chat:importProgress', {
+        stage: 'saving',
+        progress: 0,
+        message: '',
+      })
+
+      const result = await worker.incrementalImport(sessionId, filePath, (progress) => {
+        win.webContents.send('chat:importProgress', {
+          stage: progress.stage,
+          progress: progress.percentage,
+          message: progress.message,
+        })
+      })
+
+      if (result.success) {
+        // 重新生成会话索引
+        try {
+          await worker.generateSessions(sessionId)
+        } catch (e) {
+          console.error('[IpcMain] 重新生成会话索引失败:', e)
+        }
+      }
+
+      return result
+    } catch (error) {
+      console.error('[IpcMain] 执行增量导入失败:', error)
+      return { success: false, error: String(error) }
+    }
+  })
 }

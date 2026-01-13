@@ -104,6 +104,25 @@ interface ChatApi {
   // SQL 实验室
   getSchema: (sessionId: string) => Promise<TableSchema[]>
   executeSQL: (sessionId: string, sql: string) => Promise<SQLResult>
+  // 增量导入
+  analyzeIncrementalImport: (
+    sessionId: string,
+    filePath: string
+  ) => Promise<{
+    newMessageCount: number
+    duplicateCount: number
+    totalInFile: number
+    error?: string
+    diagnosis?: { suggestion?: string }
+  }>
+  incrementalImport: (
+    sessionId: string,
+    filePath: string
+  ) => Promise<{
+    success: boolean
+    newMessageCount: number
+    error?: string
+  }>
 }
 
 interface Api {

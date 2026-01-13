@@ -680,3 +680,42 @@ export async function filterMessagesWithContext(
 export async function getMultipleSessionsMessages(sessionId: string, chatSessionIds: number[]): Promise<FilterResult> {
   return sendToWorker('getMultipleSessionsMessages', { sessionId, chatSessionIds })
 }
+
+// ==================== 增量导入 ====================
+
+/**
+ * 增量导入分析结果
+ */
+export interface IncrementalAnalyzeResult {
+  newMessageCount: number
+  duplicateCount: number
+  totalInFile: number
+  error?: string
+}
+
+/**
+ * 分析增量导入（检测去重后能新增多少消息）
+ */
+export async function analyzeIncrementalImport(sessionId: string, filePath: string): Promise<IncrementalAnalyzeResult> {
+  return sendToWorker('analyzeIncrementalImport', { sessionId, filePath })
+}
+
+/**
+ * 增量导入结果
+ */
+export interface IncrementalImportResult {
+  success: boolean
+  newMessageCount: number
+  error?: string
+}
+
+/**
+ * 执行增量导入
+ */
+export async function incrementalImport(
+  sessionId: string,
+  filePath: string,
+  onProgress?: (progress: ParseProgress) => void
+): Promise<IncrementalImportResult> {
+  return sendToWorkerWithProgress('incrementalImport', { sessionId, filePath }, onProgress)
+}

@@ -371,6 +371,15 @@ export const useSessionStore = defineStore(
               file.status = 'success'
               file.sessionId = importResult.sessionId
               successCount++
+
+              // 即使取消了也要为已导入成功的文件生成会话索引
+              try {
+                const savedThreshold = localStorage.getItem('sessionGapThreshold')
+                const gapThreshold = savedThreshold ? parseInt(savedThreshold, 10) : 1800
+                await window.sessionApi.generate(importResult.sessionId, gapThreshold)
+              } catch (error) {
+                console.error('自动生成会话索引失败:', error)
+              }
             } else {
               file.status = 'failed'
               file.error = importResult.error || 'error.import_failed'

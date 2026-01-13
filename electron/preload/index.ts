@@ -383,6 +383,38 @@ const chatApi = {
   > => {
     return ipcRenderer.invoke('chat:getSchema', sessionId)
   },
+
+  // ==================== 增量导入 ====================
+
+  /**
+   * 分析增量导入（检测去重后能新增多少消息）
+   */
+  analyzeIncrementalImport: (
+    sessionId: string,
+    filePath: string
+  ): Promise<{
+    newMessageCount: number
+    duplicateCount: number
+    totalInFile: number
+    error?: string
+    diagnosis?: { suggestion?: string }
+  }> => {
+    return ipcRenderer.invoke('chat:analyzeIncrementalImport', sessionId, filePath)
+  },
+
+  /**
+   * 执行增量导入
+   */
+  incrementalImport: (
+    sessionId: string,
+    filePath: string
+  ): Promise<{
+    success: boolean
+    newMessageCount: number
+    error?: string
+  }> => {
+    return ipcRenderer.invoke('chat:incrementalImport', sessionId, filePath)
+  },
 }
 
 // Merge API - 合并功能

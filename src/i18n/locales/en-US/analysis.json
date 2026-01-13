@@ -26,7 +26,24 @@
   },
   "tooltip": {
     "chatViewer": "Chat Record Viewer",
-    "sessionIndex": "Session Index"
+    "sessionIndex": "Session Index",
+    "incrementalImport": "Append Chat Records"
+  },
+  "incremental": {
+    "title": "Append Chat Records",
+    "description": "Select chat record file to append to \"{name}\". Duplicates will be automatically removed.",
+    "selectFile": "Select chat record file",
+    "dropHint": "Click to select or drop file here",
+    "analyzing": "Analyzing file...",
+    "totalInFile": "Total in file",
+    "newMessages": "New messages",
+    "duplicates": "Duplicates",
+    "noNewMessages": "No new messages found, all messages already exist",
+    "importing": "Importing...",
+    "import": "Import {count} messages",
+    "success": "Import successful",
+    "successDetail": "Successfully appended {count} new messages",
+    "failed": "Import failed"
   },
   "filter": {
     "title": "Filter Analysis",
