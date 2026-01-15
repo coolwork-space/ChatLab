@@ -143,7 +143,7 @@ class MainProcess {
 
     this.mainWindow.once('ready-to-show', () => {
       this.mainWindow?.show()
-      
+
       // Windows 上根据当前主题设置 titleBarOverlay 颜色
       if (platform.isWindows) {
         const isDark = nativeTheme.shouldUseDarkColors
@@ -152,7 +152,7 @@ class MainProcess {
           symbolColor: isDark ? '#a1a1aa' : '#52525b', // dark: zinc-400, light: zinc-600
           height: 32,
         })
-        
+
         // 监听主题变化，动态更新图标颜色
         nativeTheme.on('updated', () => {
           if (this.mainWindow && platform.isWindows) {
@@ -280,13 +280,15 @@ class MainProcess {
 
     // 窗口关闭
     this.mainWindow.on('close', (event) => {
-      event.preventDefault()
-      // @ts-ignore
-      if (!app.isQuiting) {
-        this.mainWindow?.hide()
-      } else {
-        app.exit()
+      if (platform.isMacOS) {
+        // macOS: 只有明确退出时才真正关闭，否则只隐藏窗口（符合 macOS 用户习惯）
+        // @ts-ignore
+        if (!app.isQuiting) {
+          event.preventDefault()
+          this.mainWindow?.hide()
+        }
       }
+      // Windows/Linux: 不阻止关闭，正常触发 window-all-closed → app.quit() → cleanup()
     })
   }
 }
