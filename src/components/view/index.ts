@@ -1,6 +1,5 @@
 // 视图组件统一导出
 export { default as MessageView } from './MessageView.vue'
 export { default as WordcloudView } from './WordcloudView.vue'
-export { default as PortraitView } from './PortraitView.vue'
 export { default as InteractionView } from './InteractionView.vue'
 

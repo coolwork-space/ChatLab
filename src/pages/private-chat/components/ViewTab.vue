@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { SubTabs } from '@/components/UI'
-import { MessageView, WordcloudView, PortraitView } from '@/components/view'
+import { MessageView, WordcloudView } from '@/components/view'
 import UserSelect from '@/components/common/UserSelect.vue'
 
 const { t } = useI18n()
@@ -22,7 +22,6 @@ const props = defineProps<{
 const subTabs = computed(() => [
   { id: 'message', label: t('message'), icon: 'i-heroicons-chat-bubble-left-right' },
   { id: 'wordcloud', label: t('wordcloud'), icon: 'i-heroicons-cloud' },
-  { id: 'portrait', label: t('portrait'), icon: 'i-heroicons-user-circle' },
 ])
 
 const activeSubTab = ref('message')
@@ -55,12 +54,6 @@ const selectedMemberId = ref<number | null>(null)
           :time-filter="props.timeFilter"
           :member-id="selectedMemberId"
         />
-        <PortraitView
-          v-else-if="activeSubTab === 'portrait'"
-          :session-id="props.sessionId"
-          :time-filter="props.timeFilter"
-          :member-id="selectedMemberId"
-        />
       </Transition>
     </div>
   </div>
@@ -83,12 +76,10 @@ const selectedMemberId = ref<number | null>(null)
   "zh-CN": {
     "message": "消息",
     "wordcloud": "词云",
-    "portrait": "对话画像"
   },
   "en-US": {
     "message": "Messages",
     "wordcloud": "Word Cloud",
-    "portrait": "Chat Portrait"
   }
 }
 </i18n>
