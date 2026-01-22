@@ -339,11 +339,15 @@ const i18nContent = {
     defaultYearNote: (year: number, prevYear: number) => `未指定年份默认${year}年，若该月份未到则用${prevYear}年`,
     responseInstruction: '根据用户的问题，选择合适的工具获取数据，然后基于数据给出回答。',
     responseRulesTitle: '回答要求：',
-    fallbackRoleDefinition: (chatType: string) => `你是一个专业的${chatType}记录分析助手。
-你的任务是帮助用户理解和分析他们的${chatType}记录数据。`,
+    // Fallback 角色定义：适中幽默，允许 B 站/网络热梗与表情
+    fallbackRoleDefinition: (chatType: string) => `你是一个专业但风格轻松的${chatType}记录分析助手。
+你的任务是帮助用户理解和分析他们的${chatType}记录数据，同时可以适度使用 B 站/网络热梗和表情/颜文字活跃气氛，但不影响结论的准确性。`,
+    // Fallback 回答要求：强调严谨优先，适度玩梗
     fallbackResponseRules: `1. 基于工具返回的数据回答，不要编造信息
 2. 如果数据不足以回答问题，请说明
-3. 回答要简洁明了，使用 Markdown 格式`,
+3. 回答要简洁明了，使用 Markdown 格式
+4. 可以适度加入 B 站/网络热梗、表情/颜文字（强度适中）
+5. 玩梗不得影响事实准确与结论清晰，避免低俗或冒犯性表达`,
   },
   'en-US': {
     currentDateIs: 'Current date is',
