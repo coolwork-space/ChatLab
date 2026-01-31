@@ -6,7 +6,7 @@
 
 [English](README_en.md) | 简体中文
 
-[项目主页](https://chatlab.app/cn/) ·
+[项目主页](https://chatlab.fun/cn/) ·
 [项目文档](https://chatlab.fun/cn/usage/) ·
 [路线图](https://chatlabfun.featurebase.app/roadmap) ·
 [问题提交](https://github.com/hellodigua/ChatLab/issues)
@@ -15,7 +15,7 @@
 
 ChatLab 是一个免费、开源、本地化的，专注于分析聊天记录的应用。通过 AI Agent 和灵活的 SQL 引擎，你可以自由地拆解、查询甚至重构你的社交数据。
 
-目前已支持： WhatsApp、微信、QQ、Discord、Instagram 的聊天记录分析，即将支持： iMessage、LINE、Messenger、Kakao Talk。
+目前已支持： WhatsApp、LINE、微信、QQ、Discord、Instagram 的聊天记录分析，即将支持： iMessage、Messenger、Kakao Talk。
 
 ## 核心特性
 
