@@ -380,6 +380,8 @@ interface AIServiceConfigDisplay {
   model?: string
   baseUrl?: string
   maxTokens?: number
+  disableThinking?: boolean
+  isReasoningModel?: boolean
   createdAt: number
   updatedAt: number
 }
@@ -415,6 +417,7 @@ interface LlmApi {
     baseUrl?: string
     maxTokens?: number
     disableThinking?: boolean
+    isReasoningModel?: boolean
   }) => Promise<{ success: boolean; config?: AIServiceConfigDisplay; error?: string }>
   updateConfig: (
     id: string,
