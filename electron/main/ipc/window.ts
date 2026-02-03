@@ -74,6 +74,12 @@ export function registerWindowHandlers(ctx: IpcContext): void {
     return app.getVersion()
   })
 
+  // 重启应用
+  ipcMain.handle('app:relaunch', () => {
+    app.relaunch()
+    app.quit()
+  })
+
   // 获取远程配置（支持 JSON 和纯文本/Markdown）
   ipcMain.handle('app:fetchRemoteConfig', async (_, url: string) => {
     try {

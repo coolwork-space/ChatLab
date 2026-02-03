@@ -199,6 +199,7 @@ interface Api {
     fetchRemoteConfig: (url: string) => Promise<{ success: boolean; data?: unknown; error?: string }>
     getAnalyticsEnabled: () => Promise<boolean>
     setAnalyticsEnabled: (enabled: boolean) => Promise<{ success: boolean }>
+    relaunch: () => Promise<void>
   }
 }
 

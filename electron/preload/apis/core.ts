@@ -96,5 +96,11 @@ export const extendedApi = {
     setAnalyticsEnabled: (enabled: boolean): Promise<{ success: boolean }> => {
       return ipcRenderer.invoke('analytics:setEnabled', enabled)
     },
+    /**
+     * 重启应用
+     */
+    relaunch: (): Promise<void> => {
+      return ipcRenderer.invoke('app:relaunch')
+    },
   },
 }

@@ -41,6 +41,9 @@ const showConfirmModal = ref(false)
 const pendingNewDir = ref<string | null>(null)
 const pendingMigrate = ref(false)
 
+// 重启弹窗状态
+const showRelaunchModal = ref(false)
+
 // 格式化文件大小
 function formatSize(bytes: number): string {
   if (bytes === 0) return '0 B'
@@ -159,14 +162,18 @@ async function applyDataDirChange(newDir: string | null, migrate: boolean) {
       return
     }
 
-    // 重新加载目录信息
-    await loadDataDir()
-    await loadCacheInfo()
+    // 迁移成功，显示强制重启弹窗
+    showRelaunchModal.value = true
   } catch (error) {
     dataDirError.value = error instanceof Error ? error.message : String(error)
   } finally {
     isUpdatingDataDir.value = false
   }
+}
+
+// 重启应用
+async function relaunchApp() {
+  await window.api.app.relaunch()
 }
 
 // 组件挂载时加载数据
@@ -374,6 +381,32 @@ defineExpose({
             </UButton>
             <UButton color="primary" @click="confirmDataDirChange">
               {{ t('settings.storage.dataLocation.confirm') }}
+            </UButton>
+          </div>
+        </div>
+      </template>
+    </UModal>
+
+    <!-- 迁移成功后强制重启弹窗 -->
+    <UModal v-model:open="showRelaunchModal" :dismissible="false">
+      <template #content>
+        <div class="p-5">
+          <div class="mb-4 flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+              <UIcon name="i-heroicons-check-circle" class="h-5 w-5 text-green-600 dark:text-green-400" />
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              {{ t('settings.storage.dataLocation.migrationSuccessTitle') }}
+            </h3>
+          </div>
+
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            {{ t('settings.storage.dataLocation.migrationSuccessMessage') }}
+          </p>
+
+          <div class="mt-5 flex justify-end">
+            <UButton color="primary" @click="relaunchApp">
+              {{ t('settings.storage.dataLocation.relaunchNow') }}
             </UButton>
           </div>
         </div>

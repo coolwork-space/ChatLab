@@ -120,7 +120,10 @@
       "defaultPath": "默认位置",
       "confirmWarning": "重启应用后，旧数据目录将被自动删除。请确保新目录路径正确。",
       "cancel": "取消",
-      "confirm": "确认切换"
+      "confirm": "确认切换",
+      "migrationSuccessTitle": "数据迁移完成",
+      "migrationSuccessMessage": "应用需要重启以使更改生效。",
+      "relaunchNow": "立即重启"
     },
     "totalUsage": "总占用：",
     "loading": "加载中...",
