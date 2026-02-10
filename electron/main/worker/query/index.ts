@@ -41,7 +41,11 @@ export {
   getMentionAnalysis,
   getMentionGraph,
   getLaughAnalysis,
+  getClusterGraph,
 } from './advanced'
+
+// 小团体图类型
+export type { ClusterGraphData, ClusterGraphNode, ClusterGraphLink, ClusterGraphOptions } from './advanced'
 
 // 聊天记录查询
 export {

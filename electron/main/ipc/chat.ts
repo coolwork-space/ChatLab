@@ -514,6 +514,43 @@ export function registerChatHandlers(ctx: IpcContext): void {
   )
 
   /**
+   * 获取小团体关系图数据（基于时间相邻共现）
+   */
+  ipcMain.handle(
+    'chat:getClusterGraph',
+    async (
+      _,
+      sessionId: string,
+      filter?: { startTs?: number; endTs?: number },
+      options?: {
+        lookAhead?: number
+        decaySeconds?: number
+        minScore?: number
+        topEdges?: number
+      }
+    ) => {
+      try {
+        return await worker.getClusterGraph(sessionId, filter, options)
+      } catch (error) {
+        console.error('获取小团体关系图失败：', error)
+        return {
+          nodes: [],
+          links: [],
+          maxLinkValue: 0,
+          communities: [],
+          stats: {
+            totalMembers: 0,
+            totalMessages: 0,
+            involvedMembers: 0,
+            edgeCount: 0,
+            communityCount: 0,
+          },
+        }
+      }
+    }
+  )
+
+  /**
    * 获取含笑量分析数据
    */
   ipcMain.handle(

@@ -33,6 +33,7 @@ import {
   getMentionAnalysis,
   getMentionGraph,
   getLaughAnalysis,
+  getClusterGraph,
   getMemeBattleAnalysis,
   getCheckInAnalysis,
   searchMessages,
@@ -123,6 +124,7 @@ const syncHandlers: Record<string, (payload: any) => any> = {
   getMentionAnalysis: (p) => getMentionAnalysis(p.sessionId, p.filter),
   getMentionGraph: (p) => getMentionGraph(p.sessionId, p.filter),
   getLaughAnalysis: (p) => getLaughAnalysis(p.sessionId, p.filter, p.keywords),
+  getClusterGraph: (p) => getClusterGraph(p.sessionId, p.filter, p.options),
   getMemeBattleAnalysis: (p) => getMemeBattleAnalysis(p.sessionId, p.filter),
   getCheckInAnalysis: (p) => getCheckInAnalysis(p.sessionId, p.filter),
 

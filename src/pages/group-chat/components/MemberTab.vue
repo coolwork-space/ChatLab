@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { SubTabs } from '@/components/UI'
+import { ClusterView } from '@/components/view'
 import MemberList from './member/MemberList.vue'
 import NicknameHistory from './member/NicknameHistory.vue'
 import Relationships from './member/Relationships.vue'
@@ -28,6 +29,7 @@ const emit = defineEmits<{
 const subTabs = computed(() => [
   { id: 'list', label: t('memberList'), icon: 'i-heroicons-users' },
   { id: 'relationships', label: t('relationships'), icon: 'i-heroicons-heart' },
+  { id: 'cluster', label: t('cluster'), icon: 'i-heroicons-user-group' },
   { id: 'history', label: t('nicknameHistory'), icon: 'i-heroicons-clock' },
 ])
 
@@ -56,6 +58,13 @@ function handleDataChanged() {
           :time-filter="props.timeFilter"
         />
 
+        <!-- 小团体 -->
+        <ClusterView
+          v-else-if="activeSubTab === 'cluster'"
+          :session-id="props.sessionId"
+          :time-filter="props.timeFilter"
+        />
+
         <!-- 昵称变更记录 -->
         <NicknameHistory v-else-if="activeSubTab === 'history'" :session-id="props.sessionId" />
       </Transition>
@@ -80,11 +89,13 @@ function handleDataChanged() {
   "zh-CN": {
     "memberList": "成员列表",
     "relationships": "群关系",
+    "cluster": "互动频率",
     "nicknameHistory": "昵称变更"
   },
   "en-US": {
     "memberList": "Member List",
     "relationships": "Relationships",
+    "cluster": "Interaction",
     "nicknameHistory": "Nickname History"
   }
 }

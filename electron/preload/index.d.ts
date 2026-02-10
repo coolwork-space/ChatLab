@@ -17,6 +17,8 @@ import type {
   MemeBattleAnalysis,
   CheckInAnalysis,
   MemberWithStats,
+  ClusterGraphData,
+  ClusterGraphOptions,
 } from '../../src/types/analysis'
 import type { FileParseInfo, ConflictCheckResult, MergeParams, MergeResult } from '../../src/types/format'
 import type { TableSchema, SQLResult } from '../../src/components/analysis/SQLLab/types'
@@ -131,6 +133,7 @@ interface ChatApi {
   getDivingAnalysis: (sessionId: string, filter?: TimeFilter) => Promise<DivingAnalysis>
   getMentionAnalysis: (sessionId: string, filter?: TimeFilter) => Promise<MentionAnalysis>
   getMentionGraph: (sessionId: string, filter?: TimeFilter) => Promise<MentionGraphData>
+  getClusterGraph: (sessionId: string, filter?: TimeFilter, options?: ClusterGraphOptions) => Promise<ClusterGraphData>
   getLaughAnalysis: (sessionId: string, filter?: TimeFilter, keywords?: string[]) => Promise<LaughAnalysis>
   getMemeBattleAnalysis: (sessionId: string, filter?: TimeFilter) => Promise<MemeBattleAnalysis>
   getCheckInAnalysis: (sessionId: string, filter?: TimeFilter) => Promise<CheckInAnalysis>

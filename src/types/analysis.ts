@@ -507,3 +507,72 @@ export interface KeywordTemplate {
   name: string
   keywords: string[]
 }
+
+// ==================== 小团体关系图类型 ====================
+
+/**
+ * 小团体关系图参数
+ */
+export interface ClusterGraphOptions {
+  /** 向后看几个不同发言者（默认3） */
+  lookAhead?: number
+  /** 时间衰减常数（秒，默认120） */
+  decaySeconds?: number
+  /** 最多保留边数（默认100） */
+  topEdges?: number
+}
+
+/**
+ * 小团体图节点
+ */
+export interface ClusterGraphNode {
+  id: number
+  name: string
+  messageCount: number
+  symbolSize: number
+  degree: number
+  normalizedDegree: number
+}
+
+/**
+ * 小团体图边
+ */
+export interface ClusterGraphLink {
+  source: string
+  target: string
+  value: number
+  rawScore: number
+  expectedScore: number
+  coOccurrenceCount: number
+}
+
+/**
+ * 小团体图社区
+ */
+export interface ClusterGraphCommunity {
+  id: number
+  name: string
+  size: number
+}
+
+/**
+ * 小团体图统计
+ */
+export interface ClusterGraphStats {
+  totalMembers: number
+  totalMessages: number
+  involvedMembers: number
+  edgeCount: number
+  communityCount: number
+}
+
+/**
+ * 小团体关系图结果
+ */
+export interface ClusterGraphData {
+  nodes: ClusterGraphNode[]
+  links: ClusterGraphLink[]
+  maxLinkValue: number
+  communities: ClusterGraphCommunity[]
+  stats: ClusterGraphStats
+}

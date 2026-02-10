@@ -306,6 +306,10 @@ export async function getLaughAnalysis(sessionId: string, filter?: any, keywords
   return sendToWorker('getLaughAnalysis', { sessionId, filter, keywords })
 }
 
+export async function getClusterGraph(sessionId: string, filter?: any, options?: any): Promise<any> {
+  return sendToWorker('getClusterGraph', { sessionId, filter, options })
+}
+
 export async function getMemeBattleAnalysis(sessionId: string, filter?: any): Promise<any> {
   return sendToWorker('getMemeBattleAnalysis', { sessionId, filter })
 }

@@ -20,6 +20,8 @@ import type {
   CheckInAnalysis,
   MemeBattleAnalysis,
   MemberWithStats,
+  ClusterGraphData,
+  ClusterGraphOptions,
 } from '../../../src/types/analysis'
 import type { FileParseInfo, ConflictCheckResult, MergeParams, MergeResult } from '../../../src/types/format'
 
@@ -275,6 +277,17 @@ export const chatApi = {
     maxLinkValue: number
   }> => {
     return ipcRenderer.invoke('chat:getMentionGraph', sessionId, filter)
+  },
+
+  /**
+   * 获取小团体关系图数据（基于时间相邻共现）
+   */
+  getClusterGraph: (
+    sessionId: string,
+    filter?: { startTs?: number; endTs?: number },
+    options?: ClusterGraphOptions
+  ): Promise<ClusterGraphData> => {
+    return ipcRenderer.invoke('chat:getClusterGraph', sessionId, filter, options)
   },
 
   /**
